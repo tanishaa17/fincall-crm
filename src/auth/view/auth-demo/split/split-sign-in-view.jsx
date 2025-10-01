@@ -131,7 +131,7 @@ export function SplitSignInView() {
           <>
             {`Don’t have an account? `}
             <Link component={RouterLink} href={paths.authDemo.split.signUp} variant="subtitle2">
-              Get started
+              Register
             </Link>
           </>
         }
@@ -145,9 +145,9 @@ export function SplitSignInView() {
       <FormDivider />
 
       <FormSocials
-        signInWithGoogle={() => {}}
-        singInWithGithub={() => {}}
-        signInWithTwitter={() => {}}
+        signInWithGoogle={() => { }}
+        singInWithGithub={() => { }}
+        signInWithTwitter={() => { }}
       />
     </>
   );
