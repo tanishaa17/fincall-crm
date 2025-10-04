@@ -88,27 +88,27 @@ export function AuthSplitLayout({ sx, cssVars, children, slotProps, layoutQuery 
         methods={[
           {
             label: 'Jwt',
-            path: paths.auth.jwt.signIn,
+            path: paths.auth.login,
             icon: `${CONFIG.assetsDir}/assets/icons/platforms/ic-jwt.svg`,
           },
           {
             label: 'Firebase',
-            path: paths.auth.firebase.signIn,
+            path: paths.auth.login,
             icon: `${CONFIG.assetsDir}/assets/icons/platforms/ic-firebase.svg`,
           },
           {
             label: 'Amplify',
-            path: paths.auth.amplify.signIn,
+            path: paths.auth.login,
             icon: `${CONFIG.assetsDir}/assets/icons/platforms/ic-amplify.svg`,
           },
           {
             label: 'Auth0',
-            path: paths.auth.auth0.signIn,
+            path: paths.auth.login,
             icon: `${CONFIG.assetsDir}/assets/icons/platforms/ic-auth0.svg`,
           },
           {
             label: 'Supabase',
-            path: paths.auth.supabase.signIn,
+            path: paths.auth.login,
             icon: `${CONFIG.assetsDir}/assets/icons/platforms/ic-supabase.svg`,
           },
         ]}

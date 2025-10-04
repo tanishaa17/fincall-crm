@@ -4,6 +4,7 @@ import InitColorSchemeScript from '@mui/material/InitColorSchemeScript';
 import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 import { CONFIG } from 'src/global-config';
+import ReduxProvider from 'src/redux/Provider';
 import { themeConfig, ThemeProvider, primary as primaryColor } from 'src/theme';
 
 import { ProgressBar } from 'src/components/progress-bar';
@@ -60,25 +61,28 @@ export default async function RootLayout({ children }) {
           defaultMode={themeConfig.defaultMode}
         />
 
-        <AuthProvider>
-          <SettingsProvider
-            cookieSettings={appConfig.cookieSettings}
-            defaultSettings={defaultSettings}
-          >
-            <AppRouterCacheProvider options={{ key: 'css' }}>
-              <ThemeProvider
-                modeStorageKey={themeConfig.modeStorageKey}
-                defaultMode={themeConfig.defaultMode}
-              >
-                <MotionLazy>
-                  <ProgressBar />
-                  <SettingsDrawer defaultSettings={defaultSettings} />
-                  {children}
-                </MotionLazy>
-              </ThemeProvider>
-            </AppRouterCacheProvider>
-          </SettingsProvider>
-        </AuthProvider>
+        {/* Redux Provider wraps the app for global state */}
+        <ReduxProvider>
+          <AuthProvider>
+            <SettingsProvider
+              cookieSettings={appConfig.cookieSettings}
+              defaultSettings={defaultSettings}
+            >
+              <AppRouterCacheProvider options={{ key: 'css' }}>
+                <ThemeProvider
+                  modeStorageKey={themeConfig.modeStorageKey}
+                  defaultMode={themeConfig.defaultMode}
+                >
+                  <MotionLazy>
+                    <ProgressBar />
+                    <SettingsDrawer defaultSettings={defaultSettings} />
+                    {children}
+                  </MotionLazy>
+                </ThemeProvider>
+              </AppRouterCacheProvider>
+            </SettingsProvider>
+          </AuthProvider>
+        </ReduxProvider>
       </body>
     </html>
   );

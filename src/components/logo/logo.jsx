@@ -1,10 +1,9 @@
 'use client';
 
-import { useId } from 'react';
 import { mergeClasses } from 'minimal-shared/utils';
 
 import Link from '@mui/material/Link';
-import { styled, useTheme } from '@mui/material/styles';
+import { styled } from '@mui/material/styles';
 
 import { RouterLink } from 'src/routes/components';
 
@@ -13,14 +12,7 @@ import { logoClasses } from './classes';
 // ----------------------------------------------------------------------
 
 export function Logo({ sx, disabled, className, href = '/', isSingle = true, ...other }) {
-  const theme = useTheme();
-
-  const uniqueId = useId();
-
-  const TEXT_PRIMARY = theme.vars.palette.text.primary;
-  const PRIMARY_LIGHT = theme.vars.palette.primary.light;
-  const PRIMARY_MAIN = theme.vars.palette.primary.main;
-  const PRIMARY_DARKER = theme.vars.palette.primary.dark;
+  // ...existing code...
 
   /*
     * OR using local (public folder)

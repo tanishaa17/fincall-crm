@@ -14,11 +14,11 @@ import { useAuthContext } from '../hooks';
 // ----------------------------------------------------------------------
 
 const signInPaths = {
-  jwt: paths.auth.jwt.signIn,
-  auth0: paths.auth.auth0.signIn,
-  amplify: paths.auth.amplify.signIn,
-  firebase: paths.auth.firebase.signIn,
-  supabase: paths.auth.supabase.signIn,
+  jwt: paths.auth.login,
+  auth0: paths.auth.login,
+  amplify: paths.auth.login,
+  firebase: paths.auth.login,
+  supabase: paths.auth.login,
 };
 
 export function AuthGuard({ children }) {
