@@ -20,14 +20,16 @@ export function getToken() {
 
 export async function adminLogin({ email, password }) {
     const res = await api.post('/auth/admin/login', { email, password });
-    if (res.data.token) setToken(res.data.token);
+    if (res.data && res.data.access_token) setToken(res.data.access_token);
+    console.log('Admin login response:', res.data);
     return res.data;
 }
 
 
 export async function employeeLogin({ code, password }) {
     const res = await api.post('/auth/employee/login', { code, password });
-    if (res.data.token) setToken(res.data.token);
+    if (res.data && res.data.access_token) setToken(res.data.access_token);
+    console.log('Employee login response:', res.data);
     return res.data;
 }
 

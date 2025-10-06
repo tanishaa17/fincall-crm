@@ -2,6 +2,7 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
 import { logout, adminLogin, employeeLogin } from '../api/authApi';
+import { setAuthCookies, clearAuthCookies } from '../utils/cookie';
 
 const initialState = {
     user: null,
@@ -61,8 +62,9 @@ const authSlice = createSlice({
             .addCase(adminLoginThunk.fulfilled, (state, action) => {
                 state.loading = false;
                 state.user = action.payload.user;
-                state.token = action.payload.token;
+                state.token = action.payload.access_token;
                 state.role = 'admin';
+                setAuthCookies(action.payload.access_token, 'admin');
             })
             .addCase(adminLoginThunk.rejected, (state, action) => {
                 state.loading = false;
@@ -75,8 +77,9 @@ const authSlice = createSlice({
             .addCase(employeeLoginThunk.fulfilled, (state, action) => {
                 state.loading = false;
                 state.user = action.payload.user;
-                state.token = action.payload.token;
+                state.token = action.payload.access_token;
                 state.role = 'employee';
+                setAuthCookies(action.payload.access_token, 'employee');
             })
             .addCase(employeeLoginThunk.rejected, (state, action) => {
                 state.loading = false;
@@ -86,6 +89,7 @@ const authSlice = createSlice({
                 state.user = null;
                 state.token = null;
                 state.role = null;
+                clearAuthCookies();
             });
     },
 });

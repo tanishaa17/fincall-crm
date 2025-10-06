@@ -1,17 +1,34 @@
 "use client";
 
-import React, { useState } from 'react';
+import { useRouter } from 'next/navigation';
+import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, Tab, Tabs, Alert, Paper, Button, TextField, Typography } from '@mui/material';
 
 import { adminLoginThunk, employeeLoginThunk } from 'src/redux/slices/authSlice';
 
+
 export default function JwtLoginView() {
     const dispatch = useDispatch();
-    const { loading, error } = useSelector((state) => state.auth);
+    const { loading, error, token, role: userRole } = useSelector((state) => state.auth);
     const [role, setRole] = useState('admin');
     const [form, setForm] = useState({ email: '', code: '', password: '' });
+    const router = useRouter();
+
+    // Duplicate handlers removed
+
+    useEffect(() => {
+        if (!loading && !error && token && userRole) {
+            if (userRole === 'admin') {
+                window.location.replace('/dashboard/admin');
+            } else if (userRole === 'employee') {
+                window.location.replace('/dashboard/employee');
+            }
+        }
+    }, [loading, error, token, userRole]);
+
+    // ...existing render code...
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
@@ -30,6 +47,8 @@ export default function JwtLoginView() {
             dispatch(employeeLoginThunk({ code: form.code, password: form.password }));
         }
     };
+
+    // Duplicate redirect useEffect removed
 
     return (
         <Box sx={{
