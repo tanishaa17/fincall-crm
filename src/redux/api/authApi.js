@@ -1,4 +1,4 @@
-import axios from 'axios';
+import axios from 'src/lib/axios';
 
 let token = null;
 
