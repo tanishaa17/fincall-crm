@@ -1,54 +1,58 @@
 "use client";
 
-import { useRouter } from 'next/navigation';
+import Cookies from 'js-cookie';
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, Tab, Tabs, Alert, Paper, Button, TextField, Typography } from '@mui/material';
 
-import { adminLoginThunk, employeeLoginThunk } from 'src/redux/slices/authSlice';
+import { useRouter } from 'src/routes/hooks';
 
+import { adminLoginThunk, employeeLoginThunk } from 'src/redux/slices/authSlice';
 
 export default function JwtLoginView() {
     const dispatch = useDispatch();
-    const { loading, error, token, role: userRole } = useSelector((state) => state.auth);
-    const [role, setRole] = useState('admin');
-    const [form, setForm] = useState({ email: '', code: '', password: '' });
     const router = useRouter();
-
-    // Duplicate handlers removed
+    const { loading, error, token, role } = useSelector((state) => state.auth);
+    const [loginRole, setLoginRole] = useState('admin');
+    const [form, setForm] = useState({ email: '', code: '', password: '' });
 
     useEffect(() => {
-        if (!loading && !error && token && userRole) {
-            if (userRole === 'admin') {
-                window.location.replace('/dashboard/admin');
-            } else if (userRole === 'employee') {
-                window.location.replace('/dashboard/employee');
-            }
+        // On mount, if already authenticated via cookie, redirect to dashboard
+        const cookieToken = Cookies.get('token');
+        const cookieRole = Cookies.get('role');
+        if (cookieToken) {
+            const target = cookieRole === 'employee' ? '/dashboard/employee' : '/dashboard/admin';
+            router.replace(target);
         }
-    }, [loading, error, token, userRole]);
+        // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, []);
 
-    // ...existing render code...
+    useEffect(() => {
+        // After successful login (Redux state updated), navigate based on role
+        if (token) {
+            const target = role === 'employee' ? '/dashboard/employee' : '/dashboard/admin';
+            router.replace(target);
+        }
+    }, [token, role, router]);
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });
     };
 
     const handleRoleChange = (event, newValue) => {
-        setRole(newValue);
+        setLoginRole(newValue);
         setForm({ email: '', code: '', password: '' });
     };
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        if (role === 'admin') {
+        if (loginRole === 'admin') {
             dispatch(adminLoginThunk({ email: form.email, password: form.password }));
         } else {
             dispatch(employeeLoginThunk({ code: form.code, password: form.password }));
         }
     };
-
-    // Duplicate redirect useEffect removed
 
     return (
         <Box sx={{
@@ -90,7 +94,7 @@ export default function JwtLoginView() {
                         Welcome Back
                     </Typography>
                 </Box>
-                <Tabs value={role} onChange={handleRoleChange} centered sx={{ mb: 2 }}>
+                <Tabs value={loginRole} onChange={handleRoleChange} centered sx={{ mb: 2 }}>
                     <Tab label="Admin" value="admin" sx={{ fontWeight: 600 }} />
                     <Tab label="Employee" value="employee" sx={{ fontWeight: 600 }} />
                 </Tabs>
@@ -98,7 +102,7 @@ export default function JwtLoginView() {
                     <Box sx={{ borderBottom: 1, borderColor: 'divider' }} />
                 </Box>
                 <form onSubmit={handleSubmit}>
-                    {role === 'admin' ? (
+                    {loginRole === 'admin' ? (
                         <TextField
                             label="Email"
                             name="email"

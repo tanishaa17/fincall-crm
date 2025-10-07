@@ -5,6 +5,7 @@ import { AppRouterCacheProvider } from '@mui/material-nextjs/v15-appRouter';
 
 import { CONFIG } from 'src/global-config';
 import ReduxProvider from 'src/redux/Provider';
+import AuthRehydrator from 'src/redux/components/AuthRehydrator';
 import { themeConfig, ThemeProvider, primary as primaryColor } from 'src/theme';
 
 import { ProgressBar } from 'src/components/progress-bar';
@@ -76,7 +77,10 @@ export default async function RootLayout({ children }) {
                   <MotionLazy>
                     <ProgressBar />
                     <SettingsDrawer defaultSettings={defaultSettings} />
-                    {children}
+                    {/* Rehydrate Redux auth state from cookies */}
+                    <AuthRehydrator>
+                      {children}
+                    </AuthRehydrator>
                   </MotionLazy>
                 </ThemeProvider>
               </AppRouterCacheProvider>
@@ -84,6 +88,6 @@ export default async function RootLayout({ children }) {
           </AuthProvider>
         </ReduxProvider>
       </body>
-    </html>
+    </html >
   );
 }

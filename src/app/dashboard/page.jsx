@@ -8,7 +8,12 @@ export default function Page() {
     redirect('/auth/login');
     return null;
   }
-  // TODO: Check user role and redirect accordingly
-  redirect('/dashboard/admin');
+
+  const role = cookieStore.get('role')?.value;
+  if (role === 'employee') {
+    redirect('/dashboard/employee');
+  } else {
+    redirect('/dashboard/admin');
+  }
   return null;
 }

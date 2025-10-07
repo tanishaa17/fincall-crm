@@ -2,6 +2,7 @@
 
 import { useSetState } from 'minimal-shared/hooks';
 import { useMemo, useEffect, useCallback } from 'react';
+import Cookies from 'js-cookie';
 
 import axios, { endpoints } from 'src/lib/axios';
 
@@ -22,7 +23,9 @@ export function AuthProvider({ children }) {
 
   const checkUserSession = useCallback(async () => {
     try {
-      const accessToken = sessionStorage.getItem(JWT_STORAGE_KEY);
+      // Prefer cookie token set by Redux login flow; fallback to sessionStorage for demo flows
+      const cookieToken = Cookies.get('token');
+      const accessToken = cookieToken || sessionStorage.getItem(JWT_STORAGE_KEY);
 
       if (accessToken && isValidToken(accessToken)) {
         setSession(accessToken);
@@ -31,7 +34,11 @@ export function AuthProvider({ children }) {
 
         const { user } = res.data;
 
-        setState({ user: { ...user, accessToken }, loading: false });
+        // Attach role from cookie if present to align with role-based redirects
+        const roleFromCookie = Cookies.get('role');
+        const userWithRole = roleFromCookie ? { ...user, role: roleFromCookie } : user;
+
+        setState({ user: { ...userWithRole, accessToken }, loading: false });
       } else {
         setState({ user: null, loading: false });
       }

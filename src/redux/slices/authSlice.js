@@ -1,3 +1,16 @@
+import { fetchUserProfile } from '../api/userApi';
+// Thunk to fetch user profile using token
+export const fetchUserProfileThunk = createAsyncThunk(
+    'auth/fetchUserProfile',
+    async (token, { rejectWithValue }) => {
+        try {
+            const user = await fetchUserProfile(token);
+            return user;
+        } catch (err) {
+            return rejectWithValue(err.response?.data || err.message);
+        }
+    }
+);
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
@@ -52,9 +65,27 @@ export const logoutThunk = createAsyncThunk(
 const authSlice = createSlice({
     name: 'auth',
     initialState,
-    reducers: {},
+    reducers: {
+        setAuthFromCookie: (state, action) => {
+            state.token = action.payload.token;
+            state.role = action.payload.role;
+            // Optionally, fetch user info here if needed
+        },
+    },
     extraReducers: (builder) => {
         builder
+            .addCase(fetchUserProfileThunk.pending, (state) => {
+                state.loading = true;
+                state.error = null;
+            })
+            .addCase(fetchUserProfileThunk.fulfilled, (state, action) => {
+                state.loading = false;
+                state.user = action.payload;
+            })
+            .addCase(fetchUserProfileThunk.rejected, (state, action) => {
+                state.loading = false;
+                state.error = action.payload;
+            })
             .addCase(adminLoginThunk.pending, (state) => {
                 state.loading = true;
                 state.error = null;
@@ -94,4 +125,5 @@ const authSlice = createSlice({
     },
 });
 
+export const { setAuthFromCookie } = authSlice.actions;
 export default authSlice.reducer;
