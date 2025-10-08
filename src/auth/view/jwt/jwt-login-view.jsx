@@ -1,40 +1,23 @@
 "use client";
 
-import Cookies from 'js-cookie';
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 
 import { Box, Tab, Tabs, Alert, Paper, Button, TextField, Typography } from '@mui/material';
-
-import { useRouter } from 'src/routes/hooks';
 
 import { adminLoginThunk, employeeLoginThunk } from 'src/redux/slices/authSlice';
 
 export default function JwtLoginView() {
     const dispatch = useDispatch();
-    const router = useRouter();
-    const { loading, error, token, role } = useSelector((state) => state.auth);
+    const { loading, error } = useSelector((state) => state.auth);
     const [loginRole, setLoginRole] = useState('admin');
     const [form, setForm] = useState({ email: '', code: '', password: '' });
 
-    useEffect(() => {
-        // On mount, if already authenticated via cookie, redirect to dashboard
-        const cookieToken = Cookies.get('token');
-        const cookieRole = Cookies.get('role');
-        if (cookieToken) {
-            const target = cookieRole === 'employee' ? '/dashboard/employee' : '/dashboard/admin';
-            router.replace(target);
-        }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    // Remove automatic redirect on mount to prevent loops
+    // Let the GuestGuard handle redirects based on authentication state
 
-    useEffect(() => {
-        // After successful login (Redux state updated), navigate based on role
-        if (token) {
-            const target = role === 'employee' ? '/dashboard/employee' : '/dashboard/admin';
-            router.replace(target);
-        }
-    }, [token, role, router]);
+    // Remove Redux-based redirect logic to prevent conflicts
+    // Let GuestGuard handle redirects based on AuthProvider state
 
     const handleChange = (e) => {
         setForm({ ...form, [e.target.name]: e.target.value });

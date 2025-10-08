@@ -45,7 +45,12 @@ export function AuthGuard({ children }) {
       const signInPath = signInPaths[method];
       const redirectPath = createRedirectPath(signInPath);
 
-      router.replace(redirectPath);
+      // Only redirect if we're not already on the login page to prevent loops
+      if (!pathname.startsWith('/auth/login')) {
+        router.replace(redirectPath);
+      } else {
+        setIsChecking(false);
+      }
 
       return;
     }

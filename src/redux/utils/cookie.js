@@ -1,12 +1,11 @@
-import Cookies from 'js-cookie';
+import { setAuthTokens, clearAuthTokens } from 'src/auth/utils/secure-storage';
 
 export function setAuthCookies(token, role) {
-    // For local development, do not use 'secure: true'. Use 'sameSite: lax'.
-    Cookies.set('token', token, { sameSite: 'lax' });
-    Cookies.set('role', role, { sameSite: 'lax' });
+    // Use secure storage utility instead of direct cookie manipulation
+    setAuthTokens(token, role);
 }
 
 export function clearAuthCookies() {
-    Cookies.remove('token');
-    Cookies.remove('role');
+    // Use secure storage utility instead of direct cookie manipulation
+    clearAuthTokens();
 }

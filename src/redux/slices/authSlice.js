@@ -14,6 +14,8 @@ export const fetchUserProfileThunk = createAsyncThunk(
 
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 
+import { setAxiosAuthHeader } from 'src/auth/utils/secure-storage';
+
 import { logout, adminLogin, employeeLogin } from '../api/authApi';
 import { setAuthCookies, clearAuthCookies } from '../utils/cookie';
 
@@ -96,6 +98,7 @@ const authSlice = createSlice({
                 state.token = action.payload.access_token;
                 state.role = 'admin';
                 setAuthCookies(action.payload.access_token, 'admin');
+                setAxiosAuthHeader(action.payload.access_token);
             })
             .addCase(adminLoginThunk.rejected, (state, action) => {
                 state.loading = false;
@@ -111,6 +114,7 @@ const authSlice = createSlice({
                 state.token = action.payload.access_token;
                 state.role = 'employee';
                 setAuthCookies(action.payload.access_token, 'employee');
+                setAxiosAuthHeader(action.payload.access_token);
             })
             .addCase(employeeLoginThunk.rejected, (state, action) => {
                 state.loading = false;
@@ -121,6 +125,7 @@ const authSlice = createSlice({
                 state.token = null;
                 state.role = null;
                 clearAuthCookies();
+                setAxiosAuthHeader(null);
             });
     },
 });

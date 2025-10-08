@@ -49,7 +49,7 @@ export const navData = [
     subheader: 'Overview',
     items: [
       {
-        title: 'One',
+        title: 'Dashboard',
         path: paths.dashboard.root,
         icon: ICONS.dashboard,
         info: <Label>v{CONFIG.appVersion}</Label>,

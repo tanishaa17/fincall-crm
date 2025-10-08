@@ -16,7 +16,7 @@ export function GuestGuard({ children }) {
   const router = useRouter();
   const searchParams = useSearchParams();
 
-  const { loading, authenticated } = useAuthContext();
+  const { loading, authenticated, user } = useAuthContext();
 
   const returnTo = searchParams.get('returnTo') ?? CONFIG.auth.redirectPath;
 
@@ -28,7 +28,23 @@ export function GuestGuard({ children }) {
     }
 
     if (authenticated) {
-      router.replace(returnTo);
+      // Determine the correct dashboard based on user role
+      const userRole = user?.role;
+      
+      let targetPath = returnTo;
+      
+      // If returnTo is the default admin path, redirect to role-specific dashboard
+      if (returnTo === CONFIG.auth.redirectPath) {
+        targetPath = userRole === 'employee' ? '/dashboard/employee' : '/dashboard/admin';
+      }
+      
+      // Only redirect if we're not already on the target path
+      if (targetPath && !window.location.pathname.startsWith(targetPath.split('?')[0])) {
+        console.log('GuestGuard: Redirecting authenticated user to:', targetPath);
+        router.replace(targetPath);
+      } else {
+        setIsChecking(false);
+      }
       return;
     }
 

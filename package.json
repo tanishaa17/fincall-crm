@@ -47,6 +47,7 @@
     "dayjs": "^1.11.13",
     "es-toolkit": "^1.39.8",
     "framer-motion": "^12.23.12",
+    "i": "^0.3.7",
     "js-cookie": "^3.0.5",
     "minimal-shared": "^1.0.15",
     "next": "^15.4.6",

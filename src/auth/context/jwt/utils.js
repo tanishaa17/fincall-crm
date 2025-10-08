@@ -72,8 +72,7 @@ export function tokenExpired(exp) {
 export async function setSession(accessToken) {
   try {
     if (accessToken) {
-      sessionStorage.setItem(JWT_STORAGE_KEY, accessToken);
-
+      // Set axios authorization header
       axios.defaults.headers.common.Authorization = `Bearer ${accessToken}`;
 
       const decodedToken = jwtDecode(accessToken); // ~3 days by minimals server
@@ -84,7 +83,6 @@ export async function setSession(accessToken) {
         throw new Error('Invalid access token!');
       }
     } else {
-      sessionStorage.removeItem(JWT_STORAGE_KEY);
       delete axios.defaults.headers.common.Authorization;
     }
   } catch (error) {

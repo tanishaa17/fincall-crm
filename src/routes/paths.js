@@ -16,7 +16,15 @@ export const paths = {
     signup: `${ROOTS.AUTH}/signup`,
   },
   dashboard: {
+    root: ROOTS.DASHBOARD,
     admin: `${ROOTS.DASHBOARD}/admin`,
     employee: `${ROOTS.DASHBOARD}/employee`,
+    two: `${ROOTS.DASHBOARD}/two`,
+    three: `${ROOTS.DASHBOARD}/three`,
+    group: {
+      root: `${ROOTS.DASHBOARD}/group`,
+      five: `${ROOTS.DASHBOARD}/group/five`,
+      six: `${ROOTS.DASHBOARD}/group/six`,
+    },
   },
 };
