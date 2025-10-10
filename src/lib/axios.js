@@ -60,6 +60,8 @@ export const endpoints = {
     me: '/api/auth/me',
     signIn: '/api/auth/sign-in',
     signUp: '/api/auth/sign-up',
+    logout: '/api/v1/auth/logout',
+    changePassword: '/api/v1/auth/change-password',
   },
   mail: {
     list: '/api/mail/list',

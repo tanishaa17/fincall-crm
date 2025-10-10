@@ -43,24 +43,8 @@ export default function JwtLoginView() {
             display: 'flex',
             alignItems: 'center',
             justifyContent: 'center',
-            position: 'relative',
-            background: 'linear-gradient(120deg, #e0e7ff 0%, #f5f7fa 100%)',
+            background: 'linear-gradient(135deg, #f0f2f5 0%, #e0e7ee 100%)', // Soft gradient
         }}>
-            {/* Highly visible background block and SVG */}
-            <Box sx={{
-                position: 'absolute',
-                top: 0,
-                left: 0,
-                width: '100vw',
-                height: '100vh',
-                zIndex: 0,
-                pointerEvents: 'none',
-            }}>
-                <svg width="100%" height="100%" viewBox="0 0 1440 900" fill="none" xmlns="http://www.w3.org/2000/svg" style={{ position: 'absolute', top: 0, left: 0 }}>
-                    <rect x="0" y="0" width="1440" height="900" fill="#e0e7ff" opacity="0.35" />
-                    <ellipse cx="720" cy="450" rx="400" ry="220" fill="#c8d1e7" opacity="0.22" />
-                </svg>
-            </Box>
             <Paper elevation={12} sx={{
                 p: 5,
                 borderRadius: 5,

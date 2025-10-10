@@ -14,6 +14,7 @@ export const paths = {
   auth: {
     login: `${ROOTS.AUTH}/login`,
     signup: `${ROOTS.AUTH}/signup`,
+    changePassword: `${ROOTS.AUTH}/change-password`,
   },
   dashboard: {
     root: ROOTS.DASHBOARD,

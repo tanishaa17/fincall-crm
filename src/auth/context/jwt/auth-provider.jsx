@@ -87,6 +87,17 @@ export function AuthProvider({ children }) {
     }
   }, [setState]); // eslint-disable-line react-hooks/exhaustive-deps
 
+  const logout = useCallback(async () => {
+    try {
+      await axios.post(endpoints.auth.logout);
+    } catch (error) {
+      console.error('Logout API call failed:', error);
+    }
+    clearAuthTokens();
+    setAxiosAuthHeader(null);
+    setState({ user: null, loading: false });
+  }, [setState]);
+
   useEffect(() => {
     // Add a small delay to prevent race conditions with middleware
     const timer = setTimeout(() => {
@@ -107,6 +118,7 @@ export function AuthProvider({ children }) {
     () => ({
       user: state.user ? { ...state.user, role: state.user?.role ?? 'admin' } : null,
       checkUserSession,
+      logout,
       loading: status === 'loading',
       authenticated: status === 'authenticated',
       unauthenticated: status === 'unauthenticated',

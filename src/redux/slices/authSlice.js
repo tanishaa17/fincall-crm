@@ -32,6 +32,7 @@ export const adminLoginThunk = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         try {
             const response = await adminLogin(payload);
+            window.location.reload();
             return response;
         } catch (err) {
             return rejectWithValue(err.response?.data || err.message);
@@ -44,6 +45,7 @@ export const employeeLoginThunk = createAsyncThunk(
     async (payload, { rejectWithValue }) => {
         try {
             const response = await employeeLogin(payload);
+            window.location.reload();
             return response;
         } catch (err) {
             return rejectWithValue(err.response?.data || err.message);

@@ -14,7 +14,8 @@ import { RouterLink } from 'src/routes/components';
 import { Label } from 'src/components/label';
 import { CustomPopover } from 'src/components/custom-popover';
 
-import { useMockedUser } from 'src/auth/hooks';
+import { useAuthContext, useMockedUser } from 'src/auth/hooks';
+// import {  } from 'src/auth/hooks';
 
 import { AccountButton } from './account-button';
 import { SignOutButton } from './sign-out-button';
@@ -27,6 +28,7 @@ export function AccountPopover({ data = [], sx, ...other }) {
   const { open, anchorEl, onClose, onOpen } = usePopover();
 
   const { user } = useMockedUser();
+  const { logout } = useAuthContext();
 
   const renderMenuActions = () => (
     <CustomPopover
@@ -87,6 +89,30 @@ export function AccountPopover({ data = [], sx, ...other }) {
             </MenuItem>
           );
         })}
+
+        <MenuItem>
+          <Link
+            component={RouterLink}
+            href={paths.auth.changePassword}
+            color="inherit"
+            underline="none"
+            onClick={onClose}
+            sx={{
+              px: 1,
+              py: 0.75,
+              width: 1,
+              display: 'flex',
+              typography: 'body2',
+              alignItems: 'center',
+              color: 'text.secondary',
+              '& svg': { width: 24, height: 24 },
+              '&:hover': { color: 'text.primary' },
+            }}
+          >
+            Change Password
+          </Link>
+        </MenuItem>
+
       </MenuList>
 
       <Divider sx={{ borderStyle: 'dashed' }} />
@@ -95,6 +121,7 @@ export function AccountPopover({ data = [], sx, ...other }) {
         <SignOutButton
           size="medium"
           variant="text"
+          onClick={logout}
           onClose={onClose}
           sx={{ display: 'block', textAlign: 'left' }}
         />
