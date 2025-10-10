@@ -91,12 +91,6 @@ export const palette = {
     background: background.light,
     action: action('light'),
   },
-  dark: {
-    ...basePalette,
-    text: text.dark,
-    background: background.dark,
-    action: action('dark'),
-  },
 };
 
 export const colorKeys = {

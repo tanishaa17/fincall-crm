@@ -12,7 +12,7 @@ export default function AdminDashboard() {
             <Typography variant="h3" fontWeight={700} gutterBottom>
                 Admin Dashboard
             </Typography>
-            <Typography variant="body1">Welcome, {user?.name || "Admin"}!</Typography>
+            <Typography variant="body1">Welcome, {user?.user_name || "Admin"}!</Typography>
             {/* Add admin dashboard content here */}
         </Box>
     );

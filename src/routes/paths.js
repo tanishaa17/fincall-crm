@@ -22,6 +22,8 @@ export const paths = {
     employee: `${ROOTS.DASHBOARD}/employee`,
     two: `${ROOTS.DASHBOARD}/two`,
     three: `${ROOTS.DASHBOARD}/three`,
+    createUser: `${ROOTS.DASHBOARD}/create-user`,
+    profile: `${ROOTS.DASHBOARD}/profile`,
     group: {
       root: `${ROOTS.DASHBOARD}/group`,
       five: `${ROOTS.DASHBOARD}/group/five`,

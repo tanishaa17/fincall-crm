@@ -22,12 +22,6 @@ export const baseTheme = {
       customShadows: customShadows.light,
       opacity,
     },
-    dark: {
-      palette: palette.dark,
-      shadows: shadows.dark,
-      customShadows: customShadows.dark,
-      opacity,
-    },
   },
   mixins,
   components,

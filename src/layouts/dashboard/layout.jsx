@@ -6,9 +6,10 @@ import { useBoolean } from 'minimal-shared/hooks';
 import Box from '@mui/material/Box';
 import Alert from '@mui/material/Alert';
 import { useTheme } from '@mui/material/styles';
+import Typography from '@mui/material/Typography';
 import { iconButtonClasses } from '@mui/material/IconButton';
 
-import { _contacts, _notifications } from 'src/_mock';
+import { _notifications } from 'src/_mock';
 
 import { Logo } from 'src/components/logo';
 import { useSettingsContext } from 'src/components/settings';
@@ -16,18 +17,11 @@ import { useSettingsContext } from 'src/components/settings';
 import { useMockedUser } from 'src/auth/hooks';
 
 import { NavMobile } from './nav-mobile';
-import { VerticalDivider } from './content';
 import { NavVertical } from './nav-vertical';
 import { NavHorizontal } from './nav-horizontal';
 import { _account } from '../nav-config-account';
-import { Searchbar } from '../components/searchbar';
-import { _workspaces } from '../nav-config-workspace';
 import { MenuButton } from '../components/menu-button';
 import { AccountDrawer } from '../components/account-drawer';
-import { SettingsButton } from '../components/settings-button';
-import { LanguagePopover } from '../components/language-popover';
-import { ContactsPopover } from '../components/contacts-popover';
-import { WorkspacesPopover } from '../components/workspaces-popover';
 import { navData as dashboardNavData } from '../nav-config-dashboard';
 import { dashboardLayoutVars, dashboardNavColorVars } from './css-vars';
 import { NotificationsDrawer } from '../components/notifications-drawer';
@@ -99,34 +93,32 @@ export function DashboardLayout({ sx, cssVars, children, slotProps, layoutQuery 
           />
 
           {/** @slot Logo */}
-          {isNavHorizontal && (
-            <Logo
-              sx={{
-                display: 'none',
-                [theme.breakpoints.up(layoutQuery)]: { display: 'inline-flex' },
-              }}
-            />
-          )}
+          <Logo
+            sx={{
+              ml: 1,
+              [theme.breakpoints.up(layoutQuery)]: { mr: 1 },
+            }}
+          />
 
           {/** @slot Divider */}
-          {isNavHorizontal && (
+          {/* {isNavHorizontal && (
             <VerticalDivider sx={{ [theme.breakpoints.up(layoutQuery)]: { display: 'flex' } }} />
-          )}
+          )} */}
 
           {/** @slot Workspace popover */}
-          <WorkspacesPopover
+          {/* <WorkspacesPopover
             data={_workspaces}
             sx={{ ...(isNavHorizontal && { color: 'var(--layout-nav-text-primary-color)' }) }}
-          />
+          /> */}
         </>
       ),
       rightArea: (
         <Box sx={{ display: 'flex', alignItems: 'center', gap: { xs: 0, sm: 0.75 } }}>
           {/** @slot Searchbar */}
-          <Searchbar data={navData} />
+          {/* <Searchbar data={navData} /> */}
 
           {/** @slot Language popover */}
-          <LanguagePopover
+          {/* <LanguagePopover
             data={[
               { value: 'en', label: 'English', countryCode: 'GB' },
               { value: 'fr', label: 'French', countryCode: 'FR' },
@@ -134,16 +126,16 @@ export function DashboardLayout({ sx, cssVars, children, slotProps, layoutQuery 
               { value: 'cn', label: 'Chinese', countryCode: 'CN' },
               { value: 'ar', label: 'Arabic', countryCode: 'SA' },
             ]}
-          />
+          /> */}
 
           {/** @slot Notifications popover */}
           <NotificationsDrawer data={_notifications} />
 
           {/** @slot Contacts popover */}
-          <ContactsPopover data={_contacts} />
+          {/* <ContactsPopover data={_contacts} /> */}
 
           {/** @slot Settings button */}
-          <SettingsButton />
+          {/* <SettingsButton /> */}
 
           {/** @slot Account drawer */}
           <AccountDrawer data={_account} />
